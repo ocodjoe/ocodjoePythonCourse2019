@@ -35,15 +35,15 @@ print([i for i in name])
 ## concatenating strings is useful, too
 rename = "".join(letters_list)
 print(" ".join(letters_list))
-print("\n".join(letters_list))
+print("\n".join(letters_list)) #this creates a new line for each letter
 
 ## Indexing is flexible in python
 ## What's happening here?
 num_string = "0123456789"
-print(num_string[2:]) ## index 2 through end
+print(num_string[2:]) ## index 2 through end. #The empty column says 
 print(num_string[-2:]) ## index -2 through end
 print(num_string[:2]) ## up to index 2
-print(num_string[:-2]) ## up to index -2
+print(num_string[:-2]) ## up to index -2 #everything to the last two
 print(num_string[::2]) ## sequence, every other
 print(num_string[::-2]) ## sequence, every other from the end
 print(num_string[::3]) ## sequence, every third from beginning
@@ -55,9 +55,9 @@ print(num_string[::3]) ## sequence, every third from beginning
 print(5 + 2)
 print(5 - 2)
 print(5 * 2)
-print(5 ** 2) 
-print(5 / 2) ## in python2, this is floor division
-print(5 // 2)
+print(5 ** 2) #this is 5 raised to the power 2. 
+print(5 / 2) ## in python2, this is floor division. #This gives you the float (run down)
+print(5 // 2) #this gives you the exact
 
 whole = 5//3
 remainder = 5%3
