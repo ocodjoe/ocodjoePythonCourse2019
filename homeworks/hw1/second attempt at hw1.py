@@ -38,29 +38,43 @@ class Portfolio:
             return "You've withdrawn $%d. You now have $%d in cash." %(amount, self.Cash[0])
         elif self.Cash[0] < int(amount):
             return "You don't have sufficient cash in your portfolio."
-        
+    #Done    
     def buyStock(self, share_qty, stock):    #this is when nothing exists.
         if len(self.Stock) == 0:
-            self.Stock.append(share_qty)
-            self.Stock.append(stock.Symbol)
-            
-        #cont. here:trying to account for if it already exists and if it doens't    
-        elif len(self.Stock) !=0 and self.Cash[0] > int(share_qty*stock.Price):
-            self.Stock[0] = self.Stock[0] + int(share_qty)
-            self.Stock[1]
+            self.Stock.append([share_qty, stock.Symbol]) 
             self.Cash[0] = self.Cash[0] - int(share_qty*stock.Price)
-            return "You've bought %d shares of %s stock. and your cash balance is %d" %(share_qty, stock.Symbol, self.Cash[0]) 
+            return "You've bought %d shares of %s stock. And your cash balance is $%d." %(share_qty, stock.Symbol, self.Cash[0])
+            
+        #this accounts for special cases.    
+        elif len(self.Stock) !=0 and self.Cash[0] > int(share_qty*stock.Price):
+            self.Stock.append([int(share_qty), stock.Symbol])
+            self.Cash[0] = self.Cash[0] - int(share_qty*stock.Price)
+            return "You've bought %d shares of %s stock. And your cash balance is $%d" %(share_qty, stock.Symbol, self.Cash[0])
+        elif len(self.Stock) !=0 and self.Cash[0] == int(share_qty*stock.Price):
+            self.Stock.append([int(share_qty), stock.Symbol])
+            self.Cash[0] = self.Cash[0] - int(share_qty*stock.Price)
+            return "You've bought %d shares of %s stock. and your cash balance is $%d." %(share_qty, stock.Symbol, self.Cash[0]) 
         elif len(self.Stock) != 0 and self.Cash[0] < int(share_qty*stock.Price):
             return "You don't have sufficient funds to buy this stock."
    
-    #cont. here. Account     
+    #cont. here. -- thus 4 more functions to go. before that add commoents to above done.    
     def sellStock(self, share_qty, stock):
         if stock.Symbol == self.Stock[1]:
             return self.Stock[0]- share_qty
         elif self.Stock[0] < share_qty:   
             return "You don't have sufficient stocks to sell."
     
-            
+    def buyMutualFund(self, share_qty, mutualfund):
+        return "You've bought %d shares of %s." %(share_qty, mutualfund)
+        
+    def sellMutualFund(self, shares_qty, mutualfund):
+        return "You've sold %d share of %s." %(share_qty, mutualfund)
+    
+    def print(self):
+        return self.database
+        
+    def history(self): 
+        return "You've conducted %s so far." %(self)        
     
 
 
@@ -79,8 +93,10 @@ mf1 = MutualFund("BRT")
 mf2 = MutualFund("GHT")    
         
 pfA = Portfolio()
-
-
+pfA.addCash(120)
+pfA.buyStock(5,s)
+pfA.buyStock(5,s)
+pfA.Stock
 
 pfA.sellStock(2,s)
 
