@@ -118,7 +118,7 @@ class Portfolio:
                     
         #Note: Try to write code that makes it impossible for user to sell 
         #more stocks than he has in his collection of stocks. 
-        #elif CONT. HERE. 
+        #elif CONT. HERE. if time.
     
         
     #The code below allows the user to buy shares of mutual funds under certain
@@ -138,9 +138,17 @@ class Portfolio:
             return "You don't have sufficient funds to make the purchase."
         
      
-    #cont. here...   
+    #The code below makes it impossible to sell if the user has no shares. 
     def sellMutualFund(self, share_qty, mutualfund):
-        return "You've sold %d share of %s." %(share_qty, mutualfund)
+        if len(self.MutualFund)==0:
+            return "You don't have enough shares to sell."
+        
+        #The code below....
+        elif len(self.MutualFund) !=0 and len(self.Cash)==0:
+            self.MutualFund.append([-float(share_qty),mutualfund.Symbol])
+            self.Cash.append(float(share_qty))
+            self.Cash_track.append(float(share_qty))
+            return "You've sold %d share of %s. And your cash balance is $%d." %(share_qty, self.mutualfund.Symbol, self.Cash)
     
     #The code below returns the user's outstanding cash balance as well as
     #his the stocks and mutual funds in his portfolio. 
@@ -158,7 +166,7 @@ class Stock:
     
     description = 'Financial Instrument'
     
-    def __init__(self, Price, Symbol):
+    def __init__(self, Price, Symbol): 
         self.Price = Price
         self.Symbol = Symbol
 
@@ -186,10 +194,9 @@ pfA.Cash_track
 pfA.sellStock(2,s)
 
 pfA.buyMutualFund(10.3, mf1) 
-pfA.MutualFund
+pfA.sellMutualFund(10.3,mf1)
 
 pfA.print()    
 pfA.history()
-
-mf1.Symbol   
+  
 
