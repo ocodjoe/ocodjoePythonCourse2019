@@ -1,10 +1,11 @@
+##### WEB SCRAPPING
 #### Reading and writing files
-
 
 ## Reading text files ------------------------------------------------
 import sys
 
 ## Read all lines as one string
+##Saves file as f, stores it as an object, and prints the object.
 with open('test_readfile.txt') as f:
   the_whole_thing = f.read()
   print(the_whole_thing)
@@ -14,7 +15,7 @@ with open('test_readfile.txt') as f:
 with open('test_readfile.txt') as f:
   lines_list = f.readlines()
   for l in lines_list:
-    print(l)
+    print(l) 
 
 ## More efficiently we can loop over the file object
 ## (i.e. we don't need the variable lines)
@@ -30,11 +31,15 @@ f =  open('test_readfile.txt')
 print(f.read())
 f.close()
 
+#Note: the idea behind codes above is like in R where you want to bring
+#data in and store it as object, and manipulate object instead of the data
+#itself (it took you trouble to get).
 
 ## Writing text files ------------------------------------------------
 
 ## Writing files is easy,
 ## open command takes r, w, a, plus some others
+##The idea here is open an empty file (a txt file) and write into it.
 with open('test_writefile.txt', 'w') as f:
   ## wipes the file clean and opens it
   f.write("Hi guys.")
@@ -51,32 +56,37 @@ with open('test_writefile.txt', 'a') as f:
 import csv
 
 ## Open a file stream and create a CSV writer object
-with open('test_writecsv.csv', 'wb') as f:
-  my_writer = csv.writer(f)
+#The idea here is you open an empty file(a csv file) and write into it.
+with open('test_writecsv.csv', 'w') as f:
+  my_writer = csv.writer(f) 
   for i in range(1, 100):
-    my_writer.writerow([i, i-1])
-
+    my_writer.writerow([i, i-1]) #this creates a list of 1, 0, 2, 1, 3,2,etc.
+#Note: csv.writer() is a function that let's you create an object into
+#which you can write or manipulate. 
 
 ## Now read in the csv
-with open('test_writecsv.csv', 'rb') as f:
+with open('test_writecsv.csv', 'r') as f:
   my_reader = csv.reader(f)
   mydat = []
   for row in my_reader:
     mydat.append(row)
 print(mydat)
-
+#Note: csv.reader() is a function that let's you create an object that
+#let's you read. 
     
 ## Adding column names
+#idea we are going through names and assigning them under A and
+#going through grades and assigning them under B. Just like a dataframe.
 with open('test_csvfields.csv', 'w') as f:
   my_writer = csv.DictWriter(f, fieldnames = ("A", "B"))
   my_writer.writeheader()
-  for i in range(1, 100):
+  for i in range(1, 100):  #i here is just numeber/index if you well.
     my_writer.writerow({"B":i, "A":i-1})
     
     
 with open('test_csvfields.csv', 'r') as f:
   my_reader = csv.DictReader(f)
-  for row in my_reader:
+  for row in my_reader: 
     print(row)
 
 
@@ -89,17 +99,19 @@ with open('test_csvfields.csv', 'r') as f:
 
 ## Parsing HTML ------------------------------------------------
 
-## pip3 install beautifulsoup4
+ #pip3 install beautifulsoup4
 
 from bs4 import BeautifulSoup
-import urllib2 
+import urllib 
 import random
 import time
-import os
+import os  #os allows you
 
 ## Open a web page
 web_address = 'https://polisci.wustl.edu/people/88/'
-web_page = urllib2.urlopen(web_address)
+web_page = urllib.request.urlopen(web_address)
+#web_page = urllib2.urlopen(web_address)
+web_page
 
 ## Parse it
 soup = BeautifulSoup(web_page.read())
@@ -161,10 +173,12 @@ randy.parent
 # Beautiful Soup documentation
 # http://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
-
+#Note: We are calling the things in the div children. And siblings. 
+#And the div is the parent. 
 
 ## Function to save a web page ------------------------------------------------
-
+#This is a function that will write a file and store it in a folder
+#if the file isn't already there.
 def download_page(address, filename, wait = 5):
   time.sleep(random.uniform(0,wait))
   page = urllib.request.urlopen(address)
@@ -185,12 +199,14 @@ with open('polisci_ppl.html') as f:
 soup = BeautifulSoup(myfile)
 soup.prettify()
 
+#The idea is take all the webpages, store them on your hard drive, and
+#then you take the information from the pages later. It's safer -- no
+#breakdown of server/internet, etc. 
 
 
-
-
-#### Using Selenium: An Example
-
+#### Using Selenium: An Example 
+#Note: we are not using selenium for the homework and lab. You could use
+#for other things once you get familiar. 
 from selenium import webdriver
 from bs4 import BeautifulSoup as bs
 from selenium.webdriver.common.keys import Keys
