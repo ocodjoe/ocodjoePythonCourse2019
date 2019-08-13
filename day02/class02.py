@@ -2,7 +2,8 @@
 #### In class practice
 
 ## Namespace practice----------------------------------------------------
-type(2)
+type(2) #this type() function tells you what type of data something is
+#Lesson: scopes and overwriting. inside vs. outside the function.
 
 def print_int(int):
   int = 5
@@ -216,7 +217,7 @@ class Parent():
     self.sex = sex
     self.firstname = firstname
     self.lastname = lastname
-    self.kids = [] ## Child objects
+    self.kids = [] ## Child objects. AS part of the attributes you have an empty list.
 
   def role(self):
     if self.sex == "Male":
@@ -225,10 +226,10 @@ class Parent():
       return "Mother"
 
   def have_child(self, name):
-    child = Child(name, self)
+    child = Child(name, self)  #this is an example of class in a class. hence name before self
     print(self.firstname + " is having a child named " + child.name())
     print("They will make a very good " + self.role())
-    self.kids.append(child)
+    self.kids.append(child) #addint the child entered to the empty list (which is an attribute of Parent)
     return child
 
   def list_children(self):
@@ -239,7 +240,8 @@ class Parent():
 class Child():
   def __init__(self, firstname, parent):
     self.parent = parent 
-    self.lastname = parent.lastname
+    self.lastname = parent.lastname #see how it links to Prent class by assigning
+                                    #the parent's last name to be the kid's
     self.firstname = firstname
 
   def set_name(self, new_first_name, new_last_name):
@@ -293,7 +295,9 @@ class Animal:
 ## "children" or specific classes
 class Cat(Animal):
     def talk(self):
-        return self.meow() 
+        return self.meow()   #it seems like over here the order didn't matter.
+                             #thus, I was thinking you have to specify the function
+                             #meow() first before using it. 
     def meow(self):
         return 'Meow!'
 
@@ -334,7 +338,9 @@ class Burger():
         self.filling = filling
         self.doneness= doneness
         self.size = size
-        self.toppings = self.toppings_allowed(toppings_ordered)
+        self.toppings = self.toppings_allowed(toppings_ordered) #note: this is
+        #specifying an attribute that is the output of a method whose argument
+        #is toppings_ordered. 
         self.containter = container
     
     def toppings_allowed(self, attempted_toppings):
@@ -356,8 +362,8 @@ class Burger():
         else:
             return "meh"
         
-    def cook(self):
-        time_for_doneness = 0
+    def cook(self): 
+        time_for_doneness = 0       #takes advantage of a variable. 
         if self.doneness == "raw":
             time_for_doneness = 0
         elif self.doneness == "rare":
@@ -372,7 +378,9 @@ class Burger():
         return self.size * 4 * time_for_doneness
         
 
-class VeggieBurger(Burger):
+class VeggieBurger(Burger):              #oh so this is a subclass.
+                            #because it uses some of the attributes of the main class
+                                       
     def __init__(self, toppings_ordered, container):
       ## when initializing, you're calling burger initialization
       ## but using presets for some arguments
@@ -422,7 +430,11 @@ class Senator():
     self.bills_voted_on = [] ## list of Bill objects
 
   def vote(self, bill, choice):
-    #update the bill object--add the senator's name to the the list of yes/no/abstain
+      bill.votes[choice]=self.name
+      self.bills_voted_on.append(bill)
+      return "This %s voted %s for %s bill " %(self.name, choice, bill.title)
+  
+    #update the bill object--add the senator's name to the the list of yes/no/abstain    
     #update the senator object--add this bill to the bills this senator has voted on
     #print an informative message announcing the vote 
 
@@ -446,3 +458,6 @@ environment.result()
 print(environment.votes)
 print(environment.passed)
 print(jack.bills_voted_on[0].passed)
+
+####My answer to the exercise:
+ 

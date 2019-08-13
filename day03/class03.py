@@ -4,6 +4,7 @@
 ## Types of errors ------------------------------------------------
 
 ## Syntax errors ## 
+##When python can't understand your code.
 if x == 1:
     print("x equals 1")
 else:
@@ -25,6 +26,7 @@ print((10*2) + (5*3))
 
 
 ## Runtime errors ##
+##When python understands your code but doesn't execute it
 print(a) 
 print(5//0)
 
@@ -43,6 +45,8 @@ syntax_error()
 
 
 ## Semantic errors ##
+##When python understands your code, and executes it, but doesn't give you
+#what you want.
 
 ## I want to print all numbers in this list
 l = [10, 20, 30, 40]
@@ -50,7 +54,7 @@ for i in range(1,4):
     print(l[i])
 
 
-
+###Note: The carrot symbol shows you where something must have gone wrong. 
 
 ## Exceptions ------------------------------------------------
 
@@ -197,14 +201,17 @@ def print_integer(integer):
                 
 
         
-## Create your own exception      
+## Create your own exception 
+##Lesson: We could have just used one function but we created a generic class
+## of error messages so which ever instantiation it takes, we have an error
+##message for it. Instead of just 1 per each -- which we don't know the universe.
 class CustomException(Exception): 
   def __init__(self, value):
     self.value = value
   def __str__(self):
     return str(self.value)
 
-## use
+## use 
 raise CustomException(3)
     
 

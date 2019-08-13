@@ -30,23 +30,40 @@ class Portfolio:
         self.MutualFund = MutualFund
         
     def addCash(self, amount):
-        new_amount = int(self.Cash) + int(amount)
-        return "You've added $%s. You now have $%d in cash." %(amount, new_amount)
+        try:
+            if type(amount) == int:
+                new_amount = int(self.Cash) + amount
+                return "You've added $%d. You now have $%d in cash." %(amount, new_amount)
+            elif amount < 0:
+                new_amount = int(self.Cash) - amount
+                return "You've subtracted $%d. You now have $%d in cash." %(amount, new_amount)
+            else:
+                raise Exception
+        except:
+            raise ValueError ("Please enter a number, not a string.")
+    
             
-    def buyStock(self, share_qty, stock_name):
-        return "You've bought %d shares of %s." %(share_qty, stock_name)
+    def buyStock(self, share_qty, stock):
+        #Later on, modify to raise exception if wrong value is entered.
+        if share_qty > 0:
+            new_qty = self.Stock
+            
+        return "You've bought %d shares of %s." %(share_qty, stock.Symbol) 
         
-    def buyMutualFund(self, share_qty, mutualfund_name):
-        return "You've bought %d shares of %s." %(share_qty, mutualfund_name)
+    def buyMutualFund(self, share_qty, mutualfund):
+        return "You've bought %d shares of %s." %(share_qty, mutualfund)
         
-    def sellStock(self, share_qty, mutualfund_name):
-        return "You've sold %d shares of %s." %(share_qty, stock_name)
+    def sellStock(self, share_qty, mutualfund):
+        return "You've sold %d shares of %s." %(share_qty, stock)
         
-    def sellMutualFund(self, shares_qty, mutualfund_name):
-        return "You've sold %d share of %s." %(share_qty, mutualfund_name)
+    def sellMutualFund(self, shares_qty, mutualfund):
+        return "You've sold %d share of %s." %(share_qty, mutualfund)
     
     def withdrawCash(self, amount):
         return "You've withdrawn %d." %(amount)
+    
+    def print(self):
+        return self.database
         
     def history(self): 
         return "You've conducted %s so far." %(self)
@@ -64,15 +81,16 @@ s = Stock(20, "HFH")             #creating stock and 2 mutual funds
 mf1 = MutualFund("BRT")
 mf2 = MutualFund("GHT")
 
-            
-pfA = Portfolio(100, s, mf1)         
-print(pfA.Cash)
-print(pfA.Stock)
+pfA = Portfolio(Cash = 100, Stock = [20,"HFH"], MutualFund = "BRT" )
 print(pfA.MutualFund)
+pfA.buyStock(5,s)
+pfA.addCash(-50)
+print(pfA.db) 
 
 
-pfA.addCash(10)
-print(pfA.Cash)
+
+pfA.buyStock(5,s)
+
 
 ###My quick insights from videos so far:
     ##A class can consist of variables too, not just functions.
@@ -80,7 +98,9 @@ print(pfA.Cash)
     #you use name_of_class.name_of_function(). But if it's not a function,
     #just use name_of_class.name_of_component. Thus without brackets. 
     
-    
+example ={"name":"oswald", "day":20, "year":1990}
+print(example)
+
 ######My own examples############
 #Below, is a class that consists of one variable, name, and 3 methods. The
 #last method is used to manipulate the variable, name. 
@@ -111,7 +131,9 @@ c.name
 #####My Lessons from Rpython####################
 #The idea behind classes is that we normally have 3 classes (types of) of data: number, string,
 #and Logical or Boolean. And we can create several customized classes (types of) data that 
-#combine the already existing ones (number, string, logical) that we know. 
+#combine the already existing ones (number, string, logical) that we know. Thus, we 
+#can view software as a collection of classes and objects. This makes programming more
+#efficient. Thus, we design software using classes and objects. 
 
 class Dog:
     pass       #telling python that I'm not adding any attributes yet.
@@ -198,7 +220,7 @@ class Dog:
     
     def speak (self, sound): #a function that takes a sound input and returns
         #a sentence with name and the sound input included. 
-        return "%s says %s." %(self.name, sound)
+        return "%s says %s." %(self.name, sound) 
     
 mikey = Dog("Mikey", 7)
 print(mikey.description()) #note we use print, otherwise, the sentence won't show
@@ -207,4 +229,32 @@ print(mikey.description()) #note we use print, otherwise, the sentence won't sho
                            #write).  
 
 print(mikey.speak("Gruff gruff!")) #same idea here.  
-    
+
+###############Another example,.##############
+print(isinstance(mikey,Dog)) #we use isinstance() function to tell if 
+                            #something is an instance of a given class.
+print(isinstance(mikey,object)) #and we use the same function to check
+                                #something is an object.
+
+dir (mikey) #we use the dir() function to tell us all we can find about 
+            #an object (i.e. functions, attributes, etc.) 
+type(mikey) #we also use the type() function to tell us 
+
+#Note: python emphasises readability over dry(i.e don't repeat yourself) so
+#if inheritance doesn't make sense to you know don't do it. To use inheritance
+#look through your classes and see how they are related and see if it's
+#possible to build on top of each other or forge some relationship. Only then
+#do you use inheritance.  
+
+#Lesson Notes from Rpython on OOP########################
+#Object Oriented Programming (OOP) is a style of programming that enables us
+#to build programs that manipulate data with efficiency. For example, if I ask
+#a kid to design a program that takes his data of birth and calculates and 
+#displays his age, he can do so easily because there are few data to keep 
+#track of. However, some data manipulation programs involve a lot of different data.
+#And to keep track of them we use OOP. Where different data are store and handled
+#as objects/things. And we use classes to create objects.
+
+
+
+ 

@@ -22,7 +22,7 @@ class Bill():
     if len(self.votes["yes"]) > len(self.votes["no"]):
       self.passed = True
     else :
-      self.passed = False
+      self.passed = False 
     return self.passed
 
 ## should be able to do these things

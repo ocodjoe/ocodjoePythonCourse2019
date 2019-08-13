@@ -192,7 +192,7 @@ washu = School("Washington University in St. Louis")
 washu.add("Ipek", 2)
 washu.add("Tony", 2)
 washu.add("Ryden", 5)
-print(washu.db)
+print(washu.db) 
 
 ## how you call it is different
 #sorted_students = washu.sort()
@@ -211,13 +211,13 @@ print(washu.grade(2))
 
 
 ## Another example  ----------------------------------------------------
-
+##cont. here.
 class Parent():
   def __init__(self, sex, firstname, lastname):
     self.sex = sex
     self.firstname = firstname
     self.lastname = lastname
-    self.kids = [] ## Child objects
+    self.kids = [] ## Child objects #Looks like you can specify something not listed above
 
   def role(self):
     if self.sex == "Male":
@@ -292,9 +292,10 @@ class Animal:
 
 
 ## "children" or specific classes
+## Note: It seems a sub class is another class that inherits the methods and attributes of a class
 class Cat(Animal):
-    def talk(self):
-        return self.meow() 
+    def talk(self):                #note how it's inheriting and overwriting talk() 
+        return self.meow()         #with specific meow function.
     def meow(self):
         return 'Meow!'
 
@@ -307,24 +308,24 @@ class Dog(Animal):
 class Fish(Animal):  
     def bubbles(self):
         return 'blubblub'
-    def furry(self):
+    def furry(self):       
         return False
 
 
 
 leonard = Cat("Len")
 gus = Dog("Gus")
-nemo = Fish("nemo")
+nemo = Fish("nemo") 
 
 animals = [leonard, gus, nemo]
 
 ## Why did this happen?  How do we fix it?
 for animal in animals:
-    print(animal.name + ': ' + animal.talk())
+    print(animal.name + ': ' + animal.talk())   
 
 ## What happened here?
 for animal in animals:
-    print(animal.name + ': ' + str(animal.furry()))
+    print(animal.name + ': ' + str(animal.furry())) 
 
 
 
@@ -335,16 +336,28 @@ class Burger():
         self.filling = filling
         self.doneness= doneness
         self.size = size
-        self.toppings = self.toppings_allowed(toppings_ordered)
+        self.toppings = self.toppings_allowed(toppings_ordered) #Note here that
+        #instead of toppings_ordered, we've put toppings here, which is 
+        #equal to the output of some function of the class (toppings_allowed)
+        #whose argument is toppings_ordered. 
         self.containter = container
     
     def toppings_allowed(self, attempted_toppings):
         allowed_toppings = ["cheese", "tomato", "onion", "lettuce", "bacon"]
         toppings=[]
-        for topping in attempted_toppings:
+        for topping in attempted_toppings: #note here that attempted_toppings
+            #also means toppings_ordered, which the user inputs. 
             if topping in allowed_toppings:
                 toppings.append(topping)
         return toppings
+    #Lesson: the goal here is to create a function that takes in the toppings
+    #that the user inputs, compares them to a predefined list of toppings, and
+    #returns a message (or list) that these are the toppings you ordered. 
+    
+    #To do this, first create a list of toppings one can order. Then create an
+    #empty list (to be populated later) Then specify a for loop (using for in)
+    #that check each topping entered. If it's in the list of allowed toppings (using if in),
+    #add it to the empty toppings list created. And return that toppings list.
             
     def __str__(self):
         return "I'm a %s %s burger" % (self.doneness,self.filling)
@@ -356,6 +369,10 @@ class Burger():
             return "yuck!"
         else:
             return "meh"
+    #Lesson: what's going on (above) is that we are creating a function 
+    #that tells us how tasty an instance of the class Burger is. We think that
+    #tastiness is a function of the toppings and donness -- 2 of the 5 attributes
+    #of the instance of the burger class. 
         
     def cook(self):
         time_for_doneness = 0
@@ -371,8 +388,19 @@ class Burger():
             return "UNKNOWN"
 
         return self.size * 4 * time_for_doneness
+    
+    #Lesson: What's happening above is that we are creating a function that
+    #tells us how long it will take to cook/prepare an instance of the class 
+    #Burger. We think cook time is a function of how done the user wants the
+    #burger. So we create a variable (time_for_donness) and set it to an initial
+    #value of 0. Then we use if, elif and else conditions to set this variable 
+    #to different values depending on how well the user wants the burger done.
+    #Then, lastly, we make the function return size*4*time_for_donness, which
+    #we think is the expression that appropriately captures/tells us how long
+    #it will take to cook. 
         
 
+#CONT. HERE.-----------------------------
 class VeggieBurger(Burger):
     def __init__(self, toppings_ordered, container):
       ## when initializing, you're calling burger initialization
@@ -426,7 +454,6 @@ class Senator():
       bill.votes[choice]=self.name
       self.bills_voted_on.append(bill)
       return "This %s voted %s for %s bill " %(self.name, choice, bill.title)
-      #cont. here..
        
     #update the bill object--add the senator's name to the the list of yes/no/abstain
     #update the senator object--add this bill to the bills this senator has voted on
