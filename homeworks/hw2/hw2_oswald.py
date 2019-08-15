@@ -82,19 +82,54 @@ with open("petitions_data.csv","w") as f:
 #This part is for clicking each petition and extracting content. But I'm developing
 #the code outside the loop for now.
         
+#####Changing work directory before I proceed 
+import os
+os.getcwd()
+os.chdir('/Users/oswaldcodjoe/OneDrive - Washington University in St. Louis/Summer 19/Python/ocodjoePythonCourse2019/homeworks/hw2')
+
 ###############ATTEMPT 3 #########################
 #New idea: Follow the following steps:
         
-# Click on one petition and use it's url to extract relevant info like you did in 
+# 1: Click on one petition and use it's url to extract relevant info like you did in 
   #attempt 1
-# Figure out a way to get the urls of all the petitions from the home page, and store
+# 2: Figure out a way to get the urls of all the petitions from the home page, and store
   #them in a list.
-# Figure out a way to apply step 1 to each of the urls in the list.
-# Final step, figure out a way to figure out a way to apply step 1 to each of the
+# 3: Figure out a way to apply step 1 to each of the urls in the list.
+# 4: Final step, figure out a way to figure out a way to apply step 1 to each of the
   #urls in each of the 4 pages containing 20 or so petitions.  
   
+#Step1: Done.
+
+from bs4 import BeautifulSoup
+import urllib.request
+import re
+import csv
+import unicodedata
 
 
+with open("petitions_data.csv","w") as f:
+    dataset = csv.DictWriter(f, fieldnames = ("Title","Published Date","Issues","# of Signatures"))
+    dataset.writeheader() 
+    
+    web_address = "https://petitions.whitehouse.gov/petition/condemn-indias-denial-justice-victims-november-1984-sikh-genocide"
+    web_page = urllib.request.urlopen(web_address)                                      
+    html = BeautifulSoup(web_page.read())
+    extract = {}
+    extract["Title"] = html.find('h1',{'class':'title'}).get_text()
+    date1 = html.find('h4',{'class':'petition-attribution'}).get_text()
+    date2 = date1.split()
+    extract["Published Date"] = ' '.join(date2[4:])
+    extract["Issues"] = "Same as title"
+    signatures = html.find('div',{'class':'signatures-text-container'}).get_text()
+    signatures1 = signatures.split()
+    extract["# of Signatures"] = signatures1[0]
+    
+    dataset.writerow(extract)
+    
+
+#Step 2: Extract url of each petition, put into a list, then perform step 1 for each url.
+  #note: you just have to add a row to the already written csv. Think and proceed. 
+    
 
 
-
+html
