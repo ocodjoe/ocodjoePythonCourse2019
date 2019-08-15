@@ -129,7 +129,33 @@ with open("petitions_data.csv","w") as f:
 
 #Step 2: Extract url of each petition, put into a list, then perform step 1 for each url.
   #note: you just have to add a row to the already written csv. Think and proceed. 
+  #Try step 1 with a few different links first -- to see if all the petitions have the same
+  #page organization. 
     
-
-
-html
+  with open("petitions_data.csv","w") as f:
+    dataset = csv.DictWriter(f, fieldnames = ("Title","Published Date","Issues","# of Signatures"))
+    dataset.writeheader() 
+    
+    links = ["https://petitions.whitehouse.gov/petition/condemn-indias-denial-justice-victims-november-1984-sikh-genocide", 
+          "https://petitions.whitehouse.gov/petition/stop-collective-punishment-minorities-south-africa"]   
+    
+    for i in range(0,2):
+        web_address = links[i]
+   
+        web_page = urllib.request.urlopen(web_address)                                      
+        html = BeautifulSoup(web_page.read())
+        ex = {}
+        ex["Title"] = html.find('h1',{'class':'title'}).get_text()
+        date1 = html.find('h4',{'class':'petition-attribution'}).get_text()
+        date2 = date1.split()
+        ex["Published Date"] = ' '.join(date2[4:])
+        ex["Issues"] = "Same as title"
+        signatures = html.find('div',{'class':'signatures-text-container'}).get_text()
+        signatures1 = signatures.split()
+        ex["# of Signatures"] = signatures1[0]
+    
+        dataset.writerow(ex)
+  
+ 
+ ####Okay so now that I know putting the urls of each petition in a list works,
+ ##I'm going to go ahead and extract the urls into a list. 
