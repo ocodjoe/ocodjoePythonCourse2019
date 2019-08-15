@@ -157,5 +157,20 @@ with open("petitions_data.csv","w") as f:
         dataset.writerow(ex)
   
  
- ####Okay so now that I know putting the urls of each petition in a list works,
- ##I'm going to go ahead and extract the urls into a list. 
+####Still on step 2. Okay so now that I know putting the urls of each petition in a list works,
+##I'm going to go ahead and extract the urls into a list. 
+ 
+address = "https://petitions.whitehouse.gov/#signapetition"
+page = urllib.request.urlopen(web_address)
+html_1 = BeautifulSoup(web_page.read())
+links_a = html.find_all('a')
+links_b = links_a[12:51]
+
+for i in range(0,39):
+    link = 'https://petitions.whitehouse.gov/' + links_b[i]['href']
+    print(link)
+
+#######Okay so now I'm incorporating the above into step 2. 
+
+
+
