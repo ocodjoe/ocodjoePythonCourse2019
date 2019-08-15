@@ -159,18 +159,48 @@ with open("petitions_data.csv","w") as f:
  
 ####Still on step 2. Okay so now that I know putting the urls of each petition in a list works,
 ##I'm going to go ahead and extract the urls into a list. 
- 
 address = "https://petitions.whitehouse.gov/#signapetition"
-page = urllib.request.urlopen(web_address)
-html_1 = BeautifulSoup(web_page.read())
-links_a = html.find_all('a')
+page = urllib.request.urlopen(address)
+html_1 = BeautifulSoup(page.read())
+links_a = html_1.find_all('a')
 links_b = links_a[12:51]
 
-for i in range(0,39):
-    link = 'https://petitions.whitehouse.gov/' + links_b[i]['href']
-    print(link)
+for i in range(0,26):
+    link = 'https://petitions.whitehouse.gov/%s' %links_b[i]['href']
+    #print(link)
+    #urllib.request.urlopen('https://petitions.whitehouse.gov/%s' %links_b[i]['href'])
 
-#######Okay so now I'm incorporating the above into step 2. 
+#######Okay step 3:  so now I'm incorporating the above into step 2. 
+
+with open("petitions_data.csv","w") as f:
+    dataset = csv.DictWriter(f, fieldnames = ("Title","Published Date","Issues","# of Signatures"))
+    dataset.writeheader() 
+    
+    address = "https://petitions.whitehouse.gov/#signapetition"
+    page = urllib.request.urlopen(address)
+    html_1 = BeautifulSoup(page.read())
+    links_a = html_1.find_all('a')
+    links_b = links_a[12:51]
+    
+    for i in range(0,39):
+        #urllib.request.urlopen('https://petitions.whitehouse.gov/%s' %links_b[i]['href'])
+        web_address = 'https://petitions.whitehouse.gov/%s' %links_b[i]['href']
+   
+        web_page = urllib.request.urlopen(web_address)                                      
+        html = BeautifulSoup(web_page.read())
+        ex = {}
+        ex["Title"] = html.find('h1',{'class':'title'}).get_text()
+        date1 = html.find('h4',{'class':'petition-attribution'}).get_text()
+        date2 = date1.split()
+        ex["Published Date"] = ' '.join(date2[4:])
+        ex["Issues"] = "Same as title"
+        signatures = html.find('div',{'class':'signatures-text-container'}).get_text()
+        signatures1 = signatures.split()
+        ex["# of Signatures"] = signatures1[0]
+    
+        dataset.writerow(ex)
 
 
+######Final Step: Now applying all that I've done so far to multiple pages
+#the website has 4 pages. 
 
