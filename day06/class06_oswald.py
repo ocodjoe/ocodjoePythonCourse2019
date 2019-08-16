@@ -1,7 +1,7 @@
 #### Pollster API
 
 ## http://elections.huffingtonpost.com/pollster/api/v2
-# pip install pollster
+ pip install pollster
 
 ## adapted from example.py at https://github.com/huffpostdata/python-pollster
 
@@ -68,12 +68,17 @@ question_slug
 responses_clean = api.questions_slug_poll_responses_clean_tsv_get(question_slug)
 responses_clean
 
+#Note: Before you even start, go to the website API and scan through it and so
+#you know what you think you want. Thus read the "codebook" or documentation
+#of the data for this purpose. 
 
+#Note: The wrapper allow us to investigate and pull things using python language
+#instead of making requests to urls and waiting for something back 
 
 
 #### Google Maps API
 
-#pip install googlemaps
+pip install googlemaps
 
 ## https://console.developers.google.com/apis/credentials?project=_
 ## need geocoding and distance matrix APIs enabled
@@ -86,11 +91,12 @@ imported_items = imp.load_source('goog', '/Users/ryden/Dropbox/Coding/Secrets/st
 gmaps = imported_items.client
 
 whitehouse = 'The White House'
-location = gmaps.geocode(whitehouse)
+location = gmaps.geocode(whitehouse)    #this is just like googling whitehouse on google maps.
+#note that location is a dictionary with keys. Some of the keys are geometry, etc.  
 
 location[0].keys()
 location[0]['geometry'].keys()
-location[0]['geometry']['location']
+location[0]['geometry']['location'] 
 
 latlong = location[0]['geometry']['location']
 
@@ -106,14 +112,14 @@ duke_loc
 washu = gmaps.geocode('1 Brookings Dr, St. Louis, MO 63130')
 washu_loc = washu[0]['geometry']['location']
 distance = gmaps.distance_matrix(duke_loc, latlong)
-print(distance['rows'][0]['elements'][0]['distance']['text'])
+print(distance['rows'][0]['elements'][0]['distance']['text'])  
 
 
 
 ## Plotting in Google Maps
 
 ## https://github.com/vgm64/gmplot
-#pip install gmplot
+pip install gmplot
 from gmplot import gmplot
 # Google_API_Key is the custom file name I gave to my key
 from Google_API_Key import api_key as google_key
@@ -124,7 +130,7 @@ STL[0]['geometry']['location']
 ## latitutde and longitude and "zoom level"
 ## or location and zoom level (deprecated)
 
-plot1 = gmplot.GoogleMapPlotter(38.6270025, -90.19940419999999, 13)
+plot1 = gmplot.GoogleMapPlotter(38.6270025, -90.19940419999999, 13) #13 is just zoom level.
 plot1.apikey = google_key
 
 stl_places = ["Forest Park, St. Louis",
@@ -214,7 +220,7 @@ len(simgroups)
 
 #### Twitter API
 
-#pip install tweepy
+pip install tweepy
 import tweepy
 # http://docs.tweepy.org/en/v3.8.0/api.html
 
@@ -238,7 +244,7 @@ don = api.get_user('realDonaldTrump')
 don ## biiiig object 
 
 type(don)
-dir(don)
+dir(don) #this shows you things you can access about the user object. 
 
 ## Trying some of these methods
 print(don.id)
@@ -288,11 +294,12 @@ for status in tweepy.Cursor(api.user_timeline, id = 'realDonaldTrump').items(500
     histweets.append(status)
 
 len(histweets)
-histweets
+histweets 
 
 ## You should definitely hit the rate limit here.....
 hisfollowers = []
 for item in tweepy.Cursor(api.followers_ids, 'realDonaldTrump').items():
 	hisfollowers.append(item)
-
+    
+#Note: You can even build in an error to continue from here it was when it broke. 
 len(hisfollowers)
