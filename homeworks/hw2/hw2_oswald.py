@@ -204,3 +204,46 @@ with open("petitions_data.csv","w") as f:
 ######Final Step: Now applying all that I've done so far to multiple pages
 #the website has 4 pages. 
 
+all_pages = ['page=0','page=1','page=2','page=3','page=4']
+for i in range(0,5):
+    addendum = all_pages[i]
+    #print(addendum)
+    address = 'https://petitions.whitehouse.gov/petitions?%s' %addendum
+    print (address)
+
+###Okay so now incorporating this into what I have so far. To account for all pages.
+
+with open("petitions_data.csv","w") as f:
+    dataset = csv.DictWriter(f, fieldnames = ("Title","Published Date","Issues","# of Signatures"))
+    dataset.writeheader() 
+    
+    all_pages = ['page=0','page=1','page=2','page=3','page=4']
+    for i in range(0,5):
+        addendum = all_pages[i]
+        address = 'https://petitions.whitehouse.gov/petitions?%s' %addendum
+        
+        page = urllib.request.urlopen(address)
+        html_1 = BeautifulSoup(page.read())
+        links_a = html_1.find_all('a')
+        links_b = links_a[12:51]
+    
+        for i in range(0,39):
+            #urllib.request.urlopen('https://petitions.whitehouse.gov/%s' %links_b[i]['href'])
+            web_address = 'https://petitions.whitehouse.gov/%s' %links_b[i]['href']
+   
+            web_page = urllib.request.urlopen(web_address)                                      
+            html = BeautifulSoup(web_page.read())
+            ex = {}
+            ex["Title"] = html.find('h1',{'class':'title'}).get_text()
+            date1 = html.find('h4',{'class':'petition-attribution'}).get_text()
+            date2 = date1.split()
+            ex["Published Date"] = ' '.join(date2[4:])
+            ex["Issues"] = "Same as title"
+            signatures = html.find('div',{'class':'signatures-text-container'}).get_text()
+            signatures1 = signatures.split()
+            ex["# of Signatures"] = signatures1[0]
+    
+            dataset.writerow(ex)   
+    
+    
+    
