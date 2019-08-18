@@ -75,6 +75,6 @@ dir(imported_items)
 ####################
 dir(gmaps)
 
-type(location)
+type(location)   
 
 whitehouse
