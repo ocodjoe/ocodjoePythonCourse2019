@@ -259,10 +259,10 @@ don.status._json
 don.statuses_count
 
 ## Check his followers
-don.followers_count
+don.followers_count 
 
 ## Gives back user objects
-don_20 = don.followers() ## only the first 20!
+don_20 = don.followers() ## only the first 20! That's what the followers() function gives
 don_20
 
 [f.screen_name for f in don_20]
@@ -288,7 +288,7 @@ len(don_statuses)
 source = [x.source for x in don_statuses]
 [x.text for x in don_statuses if x.source == "Twitter for iPhone"]
 
-## Cursor performs pagination easily for you
+## Cursor performs pagination easily for you. #cont. here. 
 histweets = [] ## tweet objects
 for status in tweepy.Cursor(api.user_timeline, id = 'realDonaldTrump').items(500):
     histweets.append(status)

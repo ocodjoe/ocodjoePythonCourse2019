@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Aug 18 14:35:32 2019
+
+@author: oswaldcodjoe
+"""
+####just checking and changing my work directory.
+import os
+os.getcwd()
+os.chdir('/Users/oswaldcodjoe/OneDrive - Washington University in St. Louis/Summer 19/Python/ocodjoePythonCourse2019/homeworks/hw3')
+
+
+##Installing and importing relevant modules/libraries. Tweepy is a library
+#that contains methods that allow us to access the twitter API in python. 
+pip install tweepy
+import tweepy
+
+twitter = imp.load_source('oswaldapp1','/Users/oswaldcodjoe/OneDrive - Washington University in St. Louis/Summer 19/Python/SecretAPIFolder/twitterAPI/start_twitter_oswald.py')
+api = twitter.client
+
+#This code returns the remaining number of requests available to the 
+#user of the api before the hourly limit (if any) is reached. The output is a
+#dictionary with attributes and the dictionary is stored as limits. Note that
+#this dictionary also contains dictionaries and so on. So we probe
+#into this dictionary to list out limits. 
+
+limit = api.rate_limit_status()
+limit.keys()
+limit['resources']
+limit['resources'].keys()
+limit['resources']['tweets'] 
+
+for i in limit['resources']['tweets'].keys():
+    print (limit['resources']['tweets'][i])
+
+
+###This code below creates a user object, WashU. And we can access info about this object.
+
+WashU = api.get_user('@WUSTL') 
+
+twenty = WashU.followers() #this gives us only 20 followers
+[f.name for f in twenty] #this gives the names of the followers
+[f.screen_name for f in twenty] #this gives the screen names of the followers.
+
+
+two_hundred = api.followers(WashU.id, count = 200) #this gives more up to 200. 
+[f.screen_name for f in two_hundred]
+
+#In order to get more than 200, we use the following method of generating
+#follower ids and then looking them up individually. 
+
+WashU.followers_ids()   #this generates up to 5k ids. In this example, we focus on just 100
+for follower_id in WashU.followers_ids()[0:100]:     #Note follower_id is just a placeholder
+    user = api.get_user(follower_id) 
+    print(user.location)
+
+##The code below extracts the statuses of the user object. 
+WashU_statuses = []
+for p in range(25):    #note: p is just a placeholder and you don't have to say range(0,25). Just range(25) also works. Didn't know this.
+    WashU_statuses.extend(api.user_timeline('@WUSTL',page = p))
+
+WashU_statuses 
+
+##Oh this code tells you where the statuses/tweets/posts came from. Thus whether
+#on twitter website, or the twitter app, or some other twitter platform.
+#This gives you up to 500
+source = [x.source for x in WashU_statuses]
+source
+
+#This code prints out the statuses/tweets that were made from twitter for iphone.
+[x.text for x in WashU_statuses if x.source == 'Twitter for iPhone'] 
+
+#This code below lists all the tweets (max. 500) in a nice page for you. Using Cursor
+WashU_tweets = []
+for status in tweepy.Cursor(api.user_timeline, id = '@WUSTL').items(500):
+    WashU_tweets.append(status)
+
+#This code below lists all the followers for you using Cursor.
+
+WashU_followers = []
+for item in tweepy.Cursor(api.followers_ids, '@WUSTL').items():
+    WashU_followers.append(item)
+
+WashU_followers 
+len(WashU_followers) 
+
+
+
+
+
+
+dir(WashU)
+#dir(api). By the way, this code dir(api) gives us a list of methods that we
+#can use to extract things from the API or home/feeding server. 
+
+
+
