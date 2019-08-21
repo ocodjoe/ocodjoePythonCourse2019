@@ -139,9 +139,71 @@ max_index3 = celebrity_statuses_count.index(max_value3)
 "The celebrity with the most tweets is %s" %api.get_user(celebrity[max_index3]).name
 
     
-#########################3   
+####################################################
         
 
 ##QUESTION 2A
 
-# cont. here. 
+# ##Creating a user object called PSC
+PSC = api.get_user('@WUSTLPolisci')
+
+##Extracting a list of IDs of 20 followers of PSC
+PSC_followers = []
+for item in tweepy.Cursor(api.followers_ids,'@WUSTLPolisci').items(20): 
+        PSC_followers.append(item) 
+
+##Extracting a list of IDS of 20 followers of each of the 20 followers of PSC        
+PSC_followers2 = []
+for i in PSC_followers:
+    for j in tweepy.Cursor(api.followers_ids, i).items(20):
+        PSC_followers2.append(j)
+    
+PSC_followers2 #Note: This list is not complete since some of the queries were 
+               #unauthorized. Thus, twitter didn't allow me to fetch. 
+
+#Grouping each of the followers of the followers into layman and expert
+               
+layman1 = []
+expert1 = []
+
+
+for i in PSC_followers2:
+    if api.get_user(i).followers_count < 100:
+        layman1.append(api.get_user(i).id)
+    
+for i in PSC_followers2:
+    if 100 <= api.get_user(i).followers_count <= 1000:
+        expert1.append(api.get_user(i).id)
+        
+
+#Determining which layman has the most tweets 
+layman1_statuses_count = []        
+for i in layman1:
+    layman1_statuses_count.append(api.get_user(i).statuses_count)  
+
+max_valueA = max(layman1_statuses_count)
+max_indexA = layman1_statuses_count.index(max_valueA)
+
+"The layman with the most tweets is %s" %api.get_user(layman1[max_indexA]).name
+
+#Determining which expert has the most tweets
+expert1_statuses_count = []
+for i in expert1:
+    expert1_statuses_count.append(api.get_user(i).statuses_count)
+    
+max_valueB = max(expert1_statuses_count)
+max_indexB = expert1_statuses_count.index(max_valueB)
+
+"The expert with the most tweets is %s" %api.get_user(expert1[max_indexB]).name
+   
+
+
+##QUESTION 2B
+
+
+
+
+
+
+
+    
