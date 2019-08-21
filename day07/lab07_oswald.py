@@ -18,7 +18,7 @@ class Region(Base):
   def __init__(self, name):
     self.name = name 
 
-  def __repr__(self):
+  def __repr__(self):                           #Question: what is def__repr__ for?
     return "<Region('%s')>" % self.id 
 
 
@@ -36,7 +36,6 @@ class Department(Base):
 
   def __repr__(self):
     return "<Department('%s')>" % self.id 
-
 
 
 class Town(Base):
@@ -63,6 +62,7 @@ Base.metadata.create_all(engine)
 #Create a session to actually store things in the db
 Session = sessionmaker(bind=engine)
 session = Session()
+
 
 # Create regions
 reg1 = Region('Region 1')
@@ -100,12 +100,14 @@ t7 = Town("g", 70000)
 t8 = Town("h", 80000)
 dept4.towns = [t7, t8]
 
-session.add_all([reg1, reg2, reg3])
+session.add_all([reg1, reg2, reg3]) 
 session.add_all([dept1, dept2, dept3, dept4])
 session.add_all([t1, t2, t3, t4, t5, t6, t7, t8])
 
 
 session.commit()
+
+#dir(session)
 
 # Some example querying 
 for town in session.query(Town).order_by(Town.id):
@@ -117,6 +119,21 @@ for town in session.query(Town).order_by(Town.id):
 #    more than 50,000 inhabitants.
 # 2. Display the total number of inhabitants
 #    per department
+
+#############################################My Solutions. ############################# 
+
+#Question1
+  
+for department in session.query(Department).join(Town).filter(Town.population > 50000):
+    print(department.deptname)   
+
+
+#Question 2
+for department in session.query(Department).join(Town):
+    print(town)
+    print(town.population)
+
+dir(Town)
 
 
 

@@ -71,30 +71,64 @@ def factorial(n):
 ##else:
 ##  return a recursive call
 
+##My answer#######
+def factorial(n):
+    if n==0:
+        return 1
+    else: 
+        return factorial(n-1)*n
+    
+factorial(2)
+
+##This, above, is a great example of writing functions/coding recursivelly. 
+#Thus the algorithimic way of writing 5! is 5*4!.
 
 
 
-# Sorting
+# Sorting or shuffling
 
-my_numbers = [1, 9, 8, 5, 4, 6, 0, 2, 3, 7]
+my_numbers = [1, 9, 8, 5, 4, 6, 0, 2, 3, 7] 
+
+#####################################
+import random
+my_numbers = [1,9,8,5,4,6,0,2,3,7]
+random.shuffle(my_numbers)
+print(my_numbers) 
+#####################################
 
 # Bogo Sort
 # 1) Randomize number order
 # 2) If sorted: stop; else: repeat
 
 def bogo_sort(numbers):
-    return answer
+    random.shuffle(numbers)
+    gold_standard = sorted(numbers)
+    if numbers == gold_standard:
+        return numbers
+    else:
+        return bogo_sort(numbers)
 
+bogo_sort(my_numbers)
 
 # Selection Sort
 # 1) Find minimum of the unsorted list
 # 2) Remove minimum and place it in first element on new list
 # 3) Repeat until unsorted list is empty
 
+my_numbers = [1, 9, 8, 5, 4, 6, 0, 2, 3, 7]
+
+import numpy 
+numpy.argmin(my_numbers)  #note: min is the actual small number in the list
+                          #and argmin is the smallest indext.
+
 def selection_sort(numbers):
-    return answer
+    new_my_numbers = []
+    while len(numbers) > 0:
+        new_my_numbers.append(numpy.min(numbers))
+        numbers.remove (min(numbers))
+    return new_my_numbers
 
-
+selection_sort(my_numbers) 
 
 # Insertion Sort
 # 1) Start with the element in the second position
@@ -102,8 +136,15 @@ def selection_sort(numbers):
 # - Check left-most element until value is greater
 # 3) Continue to next position
 
+def insertion_sort(numbers):
+    for i in range(1, len(numbers)):
+        for j in range(i):
+           if numbers[i] < numbers[j]:
+               to_insert = numbers.pop(i)
+               numbers.insert(j, to_insert)
+               print(numbers)
 
-
+insertion_sort(my_numbers)
 
 # Bubble Sort
 # 1) Compare first two contiguous elements, swap if necessary
@@ -112,15 +153,39 @@ def selection_sort(numbers):
 # 4) If swaps occurred in 1 - 3, repeat for first n - 1 elements
 
 def bubble_sort(numbers):
-    return answer
+    n = 1
+    did_swap = True
+    while did_swap == True:
+        n_swaps = 0
+        for in in range (len(numbers) -1): #come back and check here. 
+        
+            if numbers[i] > numbers [i+1]:
+                numbers[i], numbers[i+1] = numbers[i+1], numbers[i]  #this is how you swap.
+                print(numbers)
+                if n_swaps == 0:
+                    did_swap = False
+                else:
+                    n += 1
+                return numbers
+            
+    
 
+#Note: the difference between return and print is print returns the answer for each
+#iteration but return just returns the answer for the final iteration. 
 
+#Below is an exmaple of swapping: 
+x=10
+y=20
+x,y = y,x
+
+print(x)
+print(y)
+################3
 
 
 # Plotting
 
-#pip install matplotlib
-
+pip install matplotlib
 
 import matplotlib.pyplot as plt
 
@@ -136,6 +201,18 @@ txt = """
 Maybe a description here
 """
 plt.figtext(.5, .05, txt, fontsize = 10, ha = "center")
-plt.savefig('plot.pdf')
-def insertion_sort(numbers):
+plt.savefig('plot.pdf') 
+
+####################################
+#Note: The way to get time is: You can find help online too.  
+import time
+start_time = time.time()
+main()
+print('------%s seconds ------' %(time.time()-start_time)) 
+
+
+
+
+###############################
+def insertion_sort(numbers): 
     return answer

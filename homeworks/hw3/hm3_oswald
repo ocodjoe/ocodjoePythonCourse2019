@@ -86,13 +86,119 @@ WashU_followers
 len(WashU_followers) 
 
 
-
-
+###testing something here# cont. here
+for i in WashU_followers:
+    print()
+WashU_followers.sort()
 
 
 dir(WashU)
 #dir(api). By the way, this code dir(api) gives us a list of methods that we
 #can use to extract things from the API or home/feeding server. 
 
+############################# HOMEWORK 3 ANSWERS ################################
+####Question 1a
 
+##Installing and importing relevant modules/libraries. 
+pip install tweepy
+import tweepy
+
+##Fetching the twitter API to be used by my program
+twitter = imp.load_source('oswaldapp1','/Users/oswaldcodjoe/OneDrive - Washington University in St. Louis/Summer 19/Python/SecretAPIFolder/twitterAPI/start_twitter_oswald.py')
+api = twitter.client
+
+##Creating WashU as a user object. The entity I'm going to collect data on.
+WashU = api.get_user('@WUSTL') 
+
+##Extracting list of followers of WashU. I'm doing this for just 20 followers for now.
+WashU_followers = []
+for item in tweepy.Cursor(api.followers_ids,'@WUSTL').items(20): 
+        WashU_followers.append(item) 
+
+WashU_followers 
+
+##Determining which of WashU followers has the highest number of tweets
+WashU_followersstatuses =[]
+for i in WashU_followers:
+    WashU_followersstatuses.append(api.get_user(i).statuses_count)
+    
+WashU_followersstatuses
+
+WashU_followersstatuses.sort(reverse=True) 
+answer = api.get_user(WashU_followersstatuses[0])
+
+answer
+
+'''The WashU_follower with the most tweets is %s and that follower's
+screen name is %s.'''  %(answer.name, answer.screen_name)
+
+
+#####Question 1b
+#Extracting, into a list, the number of followers each of the followers of WashU has.
+fof_count = []
+for i in WashU_followers:
+    fof_count.append(api.get_user(i).followers_count)
+
+#Determining which of WashU followers has the highest number of followers.
+fof_count.sort(reverse = True)
+answerb = api.get_user(fof_count[0])
+
+answerb 
+
+'''The WashU_follower with the most folllowers is %s and that follower's
+screen name is %s.'''  %(answerb.name, answerb.screen_name)
+
+
+########Question 1c.
+###Extracting into a list the people that WashU follows 
+WashU_friends = []
+for item in tweepy.Cursor(api.friends_ids, '@WUSTL').items(20):
+    WashU_friends.append(item)
+
+WashU_friends
+
+#Determining which of the people that WashU follows has the most followers
+WU_friends_f = []
+for i in WashU_friends:
+    WU_friends_f.append(api.get_user(i).followers_count)
+    
+WU_friends_f.sort(reverse=True) 
+answerc = api.get_user(WU_friends_f[0])    #####come back to this... I don't know why error
+
+WU_friends_f   
+    
+
+##Question 1d. 
+##Determining which of the people that WashU follows has the most tweets
+WU_friends_statuses = []
+for i in WashU_friends:
+    WU_friends_statuses.append(api.get_user(i).statuses_count)
+
+WU_friends_statuses.sort(reverse=True)
+answerd = api.get_user(WU_friends_statuses[0]) 
+
+''' The WashU friend with the most tweets is %s and that 
+  that friend's screen name is %s''' %(answerd.name, answerd.screen_name)
+
+
+####################Question 2#############
+
+
+
+
+
+
+
+
+
+
+####Question 2
+
+
+
+
+######################Testing stuff 
+example=api.get_user(15737265) #Oh so you can get user info by using get_user() function and id number
+dir(example)
+example.statuses_count  #oh so statuses_count gives you number of tweets. 
 

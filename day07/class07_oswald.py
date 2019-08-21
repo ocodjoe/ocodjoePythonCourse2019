@@ -1,19 +1,20 @@
 # install sqlite from sqlite.org
-# pip install sqlalchemy
-# pip install pysqlite
+ pip install sqlalchemy   #this is a wrapper
+ pip install pysqlite     #this is also a wrapper. But we may not need this.
 # Check: http://pythoncentral.io/introductory-tutorial-python-sqlalchemy/
-import sqlalchemy
+import sqlalchemy 
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, and_, or_
 from sqlalchemy.orm import relationship, backref, sessionmaker
 
-# - Connect to the local database
+# - Connect to the local database 
 # - The return value of create_engine() is an instance of Engine,
 #         and it represents the core interface to the database
 # - We could use it to talk to databse directly,
 # - but we'd rather use Session object to work with ORM
-engine = sqlalchemy.create_engine('sqlite:///players.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:///players.db', echo=True) #cont. here.
+#Note that API object gets us into an API while an engine object gets us into a database.
 
 # - ORM: object relational mapping
 # - no need to write raw SQL!
@@ -27,11 +28,16 @@ engine = sqlalchemy.create_engine('sqlite:///players.db', echo=True)
 # - Classes mapped using the Declarative system are defined in terms of a Base class
 # - Base class maintains a catalog of classes and tables relative to that base
 Base = declarative_base() 
+#note, just like we use API objects in python to get us stuff from API, we use
+#base to get stuff in database. 
+
 
 # Define some schemas
 # One to Many example
 # - foreign key on child (player)
 # - relationship() then specified by parent (team) to reference many items
+##Note: The idea is that we are using classes to create tables(or csv files) and
+##columns within the tables. 
 class Player(Base):
   __tablename__ = 'players'
   
@@ -41,6 +47,7 @@ class Player(Base):
   id = Column(Integer, primary_key=True) 
   name = Column(String)
   number = Column(Integer)
+  #Note: These are all columns of the table/database.
   
   ## ForeignKey tells us we have a relationship with another table ("teams") by the ("id") variable
   ## This info constrained to only come from that table
@@ -82,13 +89,13 @@ class Team(Base):
 #     MetaData to issue CREATE TABLE statements to the database
 #     for all tables that don’t yet exist.
 
-Base.metadata.create_all(engine) 
+Base.metadata.create_all(engine) ##this tells you the code that's being executed. 
 
 # - SQLAlchemy represent info for specific table with Table object
 # So what columns do we have?
 Player.__table__  
 Team.__table__
-
+#The above just tells us the structure of the two tables we have/are creating. 
 
 
 ## Very similar logic to what we've done before!
@@ -96,9 +103,9 @@ Team.__table__
 p1 = Player(name = "Ryden", number = 25)
 t1 = Team(name = "WashU")
 ## add team reference to player 
-p1.team = t1
+p1.team = t1         #this is linking the tables by adding the player to the team table.
 ## now a part of team object
-t1.players
+t1.players           # this links the tables by adding the team to the player table. 
 
 
 
@@ -139,7 +146,8 @@ session.commit()
 # Test again... (it keeps the count in the order they entered the database)
 print str(mason.id)
 
-
+###Below, we are using SQl to pull out information from the different tables and 
+#presenting them. This is the power of SQL. 
 # Some querying
 # order the results
 # you can think of it as... session.query(TABLE).order_by(COLUMN)
@@ -179,7 +187,7 @@ results.first()
 results[0]
 results[1]
 
-len(results)
+len(results) #note: index-wise, they behave like a list but otherwise, not. 
 
 
 # why use .count()?
@@ -268,7 +276,8 @@ for player in players:
   ## apply skils we've learned already
   print(player.name, player.number, player.team)
 
-
+#Note: there's a similar thing for sql in R but it requres actually knowing
+#the sql language. 
 
 
 
@@ -444,7 +453,8 @@ for book in session.query(Book).join(Author):
 # 
 session.commit()
 
-
+##Note: There are two types of joins. One that joins only with complete information
+#and another...
 
 
 
