@@ -87,34 +87,61 @@ max_index = WashU_friends_statuses_count.index(max_value)
 
 api.get_user(WashU_friends[max_index]).name #this just gives friend with max tweets
 
-#Grouping the 20 that WashU follows into layman, expert, and celebrity
-#But I got stuck so come back to this later
+#Grouping the 20 friends of WashU into layman, expert, and celebrity 
 
 layman = []
 expert = []
 celebrity = []
-    
-for i in WashU_friends_followers_count:
-    
-    if i < 100:
-        layman.append(i) 
-    elif 100 <= i <= 1000:
-        expert.append(i)
-    elif i > 1000:
-        celebrity.append(i)
 
-max_value1 = max(layman)
-max_index1 = layman.index(max_value1)
 
-api.get_user(WashU_friends[max_index1]).name
-api.get_user(WashU_friends[max_index1])    
+for i in WashU_friends:
+    if api.get_user(i).followers_count < 100:
+        layman.append(api.get_user(i).id)
     
-layman
-expert
-celebrity
-#########################3    
+for i in WashU_friends:
+    if 100 <= api.get_user(i).followers_count <= 1000:
+        expert.append(api.get_user(i).id)
+        
+for i in WashU_friends:
+    if api.get_user(i).followers_count > 1000:
+        celebrity.append(api.get_user(i).id) 
+        
+       
+#Determining which layman, expert, and celebrity have the most tweets.
+        
+layman_statuses_count = []        
+for i in layman:
+    layman_statuses_count.append(api.get_user(i).statuses_count)  
+
+max_value1 = max(layman_statuses_count)
+max_index1 = layman_statuses_count.index(max_value1)
+
+"The layman with the most tweets is %s" %api.get_user(layman[max_index1]).name
+
+
+expert_statuses_count = []
+for i in expert:
+    expert_statuses_count.append(api.get_user(i).statuses_count)
+    
+max_value2 = max(expert_statuses_count)
+max_index2 = expert_statuses_count.index(max_value2)
+
+"The expert with the most tweets is %s" %api.get_user(expert[max_index2]).name
+   
+
+celebrity_statuses_count = []
+for i in celebrity:
+    celebrity_statuses_count.append(api.get_user(i).statuses_count)
+
+max_value3 = max(celebrity_statuses_count)
+max_index3 = celebrity_statuses_count.index(max_value3)
+
+"The celebrity with the most tweets is %s" %api.get_user(celebrity[max_index3]).name
+
+    
+#########################3   
         
 
 ##QUESTION 2A
 
-#
+# cont. here. 
