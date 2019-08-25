@@ -1,16 +1,17 @@
 ## Function to link 2 nodes (not in the sense of last script)
 def makeLink(G, node1, node2):
   if node1 not in G:
-    G[node1] = {}
-  (G[node1])[node2] = True
+    G[node1] = {}   #makes an empty dictionary
+  (G[node1])[node2] = True #assings the value 'True' to be the value of the dic above.
   if node2 not in G:
-    G[node2] = {}
-  (G[node2])[node1] = True
+    G[node2] = {}  #makes an empty dictionary
+  (G[node2])[node1] = True #assigns the value of 'True' to be the value of the dic above.
   return G 
 
 graph = {}
 graph = makeLink(graph, "a", "b")
 
+d  
 
 ## empty graph 
 ring = {} 
@@ -36,6 +37,37 @@ print(sum([len(ring[node]) for node in ring.keys()])/2)
 ## TODO: create a square graph with 256 nodes using the makeLink function
 ## TODO: define a function countEdges
 
+############Testing with first 9 numbers first.
+#Advice: use properties of the square you want to creat. if i%3 is 1, then
+#you are on the left side. If i%3 is 0, you are on the right side. 
+#Also, if you i//16 is <1, then you are on the top row, if i//16 is between
+#1 and 2, you are on the second row. if i//16 is between 2 and 3, you are on
+#the third row, etc. 
+b = 9
+
+for i in range(b):
+    if i%3 == 1:
+        square = makeLink(square, i, i%3) #answer in solution
+    elif i%3 == 0:
+        square = make....
+    elif i//...#cont. here. 
+        
+
+
+
+
+
+#####################
+
+##My answers
+m = 256  #number of nodes
+
+#Adding edges with the makeLink function. Use if statements and makeLink function.
+##try out. 
+
+for i in range(m):
+    if....
+    square = makeLink(square, i, )
 
 
 
@@ -43,6 +75,12 @@ print(sum([len(ring[node]) for node in ring.keys()])/2)
 
 
 
+
+
+
+
+
+###################################################
 
 ##  Social Network
 class Actor(object):
@@ -58,7 +96,7 @@ kb = Actor("Kevin Bacon")
 ah = Actor("Anne Hathaway")
 rd = Actor("Robert DeNiro")
 ms = Actor("Meryl Streep")
-dh = Actor("Dustin Hoffman")
+dh = Actor("Dustin Hoffman") 
 
 movies = {}
 
@@ -82,8 +120,8 @@ def findPath(graph, start, end, path=[]):
     path = path + [start]
     ## base case, reached end
     if start == end:
-        return path
-    if not graph.has_key(start):
+        return path 
+    if not start in graph.keys():
         return None
     ## for each connection to starting node
     for node in graph[start]:
@@ -95,7 +133,7 @@ def findPath(graph, start, end, path=[]):
     return findPath(graph, node, end, path)
 
 
-print(findPath(movies, jr, ms))
+print(findPath(movies, jr, ms))  
 
 ## start with julia roberts 
 ## who is she directly connected to?
@@ -116,6 +154,22 @@ movies[kb].keys() ## found meryl streep!
 ## allPaths = findAllPaths(movies, jr, ms)
 ## for path in allPaths:
 ##   print path
+
+##My answers:
+allPaths = findAllPaths(movies, jr, ms) 
+
+def findAllPaths(graph, start, end, path=[]): #not we don't include path=[] when calling the function. It's here only because a list is creating when we call the function.
+    ##creating path list
+    path = path + [start]
+    ##here's the base case, because recursive function sounds like the best way to do it.
+    if start == end:
+        return path
+    if not start in graph.keys:
+        return None
+    for node in graph[start]:
+        if node not in path:
+            
+    
 
 
 

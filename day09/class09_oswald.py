@@ -1,5 +1,6 @@
 #### Class 09
 #### Some old and some new data types and tricks 
+##The goal here to to go over some of the things we may have seen in passing. Overview. 
 
 #pip install pandas
 #pip install numpy
@@ -152,7 +153,7 @@ x
 x.remove(3)
 x
 
-## enumerate
+## enumerate  #it gives us the index and the corresponding number. 
 
 import string
 
@@ -179,7 +180,8 @@ for a,b,c in [(1, 2, 3), (10,11,12)]:
 
 
 
-## Dictionary ----------------------------------------------------
+## Dictionary ---------------------------------------------------- 
+#Note: Just an aside, there are now ordered dictionaries too... just fyi. 
 
 zip(letters,range(1,27))
 d = dict(zip(letters,range(1,27)))
@@ -205,11 +207,16 @@ d['z'] = 'last' ## overwrites
 
 d["A"].append("hi")
 u = {"A" : [29, 30, 27]}
-d.update(u)
+d.update(u) 
 
 
 ## Tree ----------------------------------------------------
 ## Our own data structure!
+##To help you understand: the data frame analogy. So this below is like what happens
+##behind the scenes when you add column or add row or manipulate a data frame in general.
+##someone behind the scenes had written this below -- so to speak. So the child is the
+##addition and the parent is the data frame and the existing children are the rows or
+##columns already in the data frame. 
 
 class Node():
 	def __init__(self, value = None):
