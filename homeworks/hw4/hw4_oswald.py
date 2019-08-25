@@ -45,6 +45,8 @@ def selection_sort(A):
             A[i], A[minIndex] = A[minIndex], A[i] 
         print (A)
          
+
+
 selection_sort([1,8,9,7,4,3,1,2]) 
 
 
@@ -67,6 +69,94 @@ bubble_sort([1,8,9,7,4,3,1,2])
 
 ##Bogo sort
 #
+
+#####################Now Checking the time it takes to execute#################
+
+##Aside: learning to create a list of randomly shuffled itmes. This helps me
+#create a random list of n numbers to be sorted. And I can use this to test my 
+#sorting algorithms  and how long they take to execute for different lengths of the list.
+
+import random
+numbers = []
+for i in range(0,5):
+    numbers.append(i)
+random.shuffle(numbers)
+#print(numbers) 
+########################################3
+import time
+start = time.time()
+
+selection_sort(numbers)
+
+end = time.time()
+print (end - start)
+
+y1 = 0.0002498626708984375 #This is how long it takes to do solection sort with n=5
+
+###Now trying for when n=10
+numbers = []
+for i in range(0,10):
+    numbers.append(i)
+random.shuffle(numbers)
+#print(numbers) 
+
+start = time.time()
+
+selection_sort(numbers)
+
+end = time.time()
+print (end - start)
+
+y2 = 0.0015039443969726562 #This is how long it takes when n=10
+
+####Now trying when n=15
+numbers = []
+for i in range(0,15):
+    numbers.append(i)
+random.shuffle(numbers)
+#print(numbers) 
+
+start = time.time()
+
+selection_sort(numbers)
+
+end = time.time()
+print (end - start)
+
+y3 = 0.0005471706390380859
+
+###Now trying for when n=20
+numbers = []
+for i in range(0,20):
+    numbers.append(i)
+random.shuffle(numbers)
+#print(numbers) 
+
+start = time.time()
+
+selection_sort(numbers)
+
+end = time.time()
+print (end - start)
+
+y4 = 0.0005292892456054688
+
+###Now trying for when n=25
+numbers = []
+for i in range(0,25):
+    numbers.append(i)
+random.shuffle(numbers)
+
+start = time.time()
+
+selection_sort(numbers)
+
+end = time.time()
+print (end - start)
+
+y5 = 0.003922939300537109
+
+
 
 
 
