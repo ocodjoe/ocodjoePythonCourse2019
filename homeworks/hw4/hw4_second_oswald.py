@@ -107,21 +107,19 @@ x = (2,4,6,8,10) ## # of elements in list
 y = (0.0007369518280029297,0.000270843505859375,0.0006749629974365234,0.0006999969482421875,0.005377769470214844 ) ## time
 plt.subplots_adjust(left = .13, right = .95, top = .9, bottom = .3)
 plt.plot(x, y)
-plt.legend(['hi', 'bye'], loc = "upper left", prop = {"size":10})
-plt.ylabel("Y")
-plt.xlabel("X")
+#plt.legend(['hi', 'bye'], loc = "upper left", prop = {"size":10})
+plt.ylabel("Time")
+plt.xlabel("Length of List")
 plt.title("The Effect of Different Sort Algorithms on Runtime")
 txt = """
 Plot 1: How runtime of bubble_sort(A) changes with length of list. 
 """
 plt.figtext(.5, .05, txt, fontsize = 10, ha = "center")
-plt.savefig('plot.pdf') 
+plt.savefig('plot1.pdf') 
 
 ##################################PART TWO ###################################
 
 #cont. here.. choose different algorithm (of different O() and then do the same as above
-
-
 
 
 
