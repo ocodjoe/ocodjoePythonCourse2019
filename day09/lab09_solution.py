@@ -1,17 +1,12 @@
 ## Function to link 2 nodes (not in the sense of last script)
 def makeLink(G, node1, node2):
   if node1 not in G:
-    G[node1] = {}   #makes an empty dictionary
-  (G[node1])[node2] = True #assings the value 'True' to be the value of the dic above.
+    G[node1] = {}
+  (G[node1])[node2] = True
   if node2 not in G:
-    G[node2] = {}  #makes an empty dictionary
-  (G[node2])[node1] = True #assigns the value of 'True' to be the value of the dic above.
+    G[node2] = {}
+  (G[node2])[node1] = True
   return G 
-
-graph = {}
-graph = makeLink(graph, "a", "b")
-
-d  
 
 ## empty graph 
 ring = {} 
@@ -22,65 +17,45 @@ n = 5
 ## Add in edges with makeLink function
 for i in range(n):
   ring = makeLink(ring, i, (i+1)%n)
-  print(ring)
+  print ring
 
-print(ring)
+print ring
 
 ## How many nodes?
-print(len(ring))
+print len(ring)
 
 ## How many edges?
-print(sum([len(ring[node]) for node in ring.keys()])/2)
+print sum([len(ring[node]) for node in ring.keys()])/2 
 
 
 ## Grid Network
 ## TODO: create a square graph with 256 nodes using the makeLink function
 ## TODO: define a function countEdges
 
-############Testing with first 9 numbers first.
-#Advice: use properties of the square you want to creat. if i%3 is 1, then
-#you are on the left side. If i%3 is 0, you are on the right side. 
-#Also, if you i//16 is <1, then you are on the top row, if i//16 is between
-#1 and 2, you are on the second row. if i//16 is between 2 and 3, you are on
-#the third row, etc. 
-b = 9
-
-for i in range(b):
-    if i%3 == 1:
-        square = makeLink(square, i, i%3) #answer in solution
-    elif i%3 == 0:
-        square = make....
-    elif i//...#cont. here. 
-        
-
+import math
+n = 16
+g = {}
+for i in range(1,n):
+  n_width = int(math.sqrt(n))
+  ## if we are not on a boundary
+  ## i.e., if node is not multiple of our set node width
+  ## then link to next node
+  if i%n_width != 0:
+    makeLink(g, i, i+1)
+  ## if not on last row
+  ## link to node directly below
+  if i <= n-n_width:
+    makeLink(g, i, i+n_width)
 
 
-
-
-#####################
-
-##My answers
-m = 256  #number of nodes
-
-#Adding edges with the makeLink function. Use if statements and makeLink function.
-##try out. 
-
-for i in range(m):
-    if....
-    square = makeLink(square, i, )
+def count_edges(graph):
+  ## apply len function to each element of graph (how many connections)
+  ## sum up all connections
+  ## divide by 2 since each counted twice in graph (1->2 and 2<-1)
+  return sum(map(len, graph.values()))/2
 
 
 
-
-
-
-
-
-
-
-
-
-###################################################
 
 ##  Social Network
 class Actor(object):
@@ -96,7 +71,7 @@ kb = Actor("Kevin Bacon")
 ah = Actor("Anne Hathaway")
 rd = Actor("Robert DeNiro")
 ms = Actor("Meryl Streep")
-dh = Actor("Dustin Hoffman") 
+dh = Actor("Dustin Hoffman")
 
 movies = {}
 
@@ -120,12 +95,8 @@ def findPath(graph, start, end, path=[]):
     path = path + [start]
     ## base case, reached end
     if start == end:
-<<<<<<< HEAD:day09/lab09_oswald.py
-        return path 
-=======
         return path
->>>>>>> upstream/master:day09/lab09.py
-    if not start in graph.keys():
+    if not graph.has_key(start):
         return None
     ## for each connection to starting node
     for node in graph[start]:
@@ -137,7 +108,7 @@ def findPath(graph, start, end, path=[]):
     return findPath(graph, node, end, path)
 
 
-print(findPath(movies, jr, ms))  
+print findPath(movies, jr, ms)
 
 ## start with julia roberts 
 ## who is she directly connected to?
@@ -159,32 +130,33 @@ movies[kb].keys() ## found meryl streep!
 ## for path in allPaths:
 ##   print path
 
-##My answers:
-allPaths = findAllPaths(movies, jr, ms) 
+def findAllPaths(graph, start, end, path=[]):
+        path = path + [start]
+        if start == end:
+            return [path]
+        if not graph.has_key(start):
+            return None
+        allpaths = []
+        for node in graph[start]:
+            if node not in path:
+                allpaths.extend(findAllPaths(graph, node, end, path))
+        allpaths = filter(None, allpaths)
+        return allpaths
 
-def findAllPaths(graph, start, end, path=[]): #not we don't include path=[] when calling the function. It's here only because a list is creating when we call the function.
-    ##creating path list
-    path = path + [start]
-    ##here's the base case, because recursive function sounds like the best way to do it.
-    if start == end:
-        return path
-    if not start in graph.keys:
-        return None
-    for node in graph[start]:
-        if node not in path:
-            
-    
+allpaths = findAllPaths(movies, jr, ms)
 
-
-
-
+for path in allpaths:
+  print path
 
 
 ## TODO: implement findShortestPath() to print shorest path between actors
 ## print findShortestPath(movies, ms, ss)
 
+def findShortestPath(graph, start, end):
+    allpaths = findAllPaths(graph, start, end)
+    return min(allpaths, key = len)
 
-
+shortest = findShortestPath(movies, jr, ms)
 
 
 
