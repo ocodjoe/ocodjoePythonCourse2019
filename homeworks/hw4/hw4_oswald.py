@@ -157,6 +157,21 @@ print (end - start)
 y5 = 0.003922939300537109
 
 
+######Notes for getting time complexity of codes in python
+###It's helpful to always think of the square farm and weeding it analogy. Weeding
+#time increases with area, not just one side or the other. 
+
+##Identify the time complexities for each of the individual components of the body
+#of code and add them.
+## During addition, drop constants. For example, O(n) + O(2n) is still O(n) 
+##Different inputs means different variables. for example, when a python function
+#has a nested loop (eg. one loop inside another and the list on which is loop
+#is performed is different) the time complexity is O(a*b) where a and b are the 
+#respective lengths of the lists. Of course if the lists have the same length,
+#then time complexity is O(a^2) or whatever.
+##When adding, drop non-dominant terms. Example, if you have O(n) + O(n^2) the answer
+#is O(n^2). We just want to have some idea of how it's going. hence, such a focus.
+
 
 
 
