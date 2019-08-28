@@ -36,7 +36,12 @@ class LinkedList():
         self.size += 1
     
     def addNodeAfter(self, new_value, after_value):
-        #cont. here...
+        current_position = self.root
+        while current_position != after_value:
+            current_position = current_position.next 
+            if current_position = after_value:
+                
+    
         
     def addNodeBefore(self, new_value, before_value):
         #cont. here...
@@ -68,13 +73,22 @@ class LinkedList():
     
     
     def __str__(self):
-        #cont. here..
-        
-    def hasCycle(self):
-        #cont. hewre...
-        
+        current_position = self.root
+        while current_positon is not None:
+            return (str(current_position.value))
         
     
+    
+d = LinkedList(5)
+
+d.addNode(4)
+d.addNode(12)
+d.addNode(9)
+d.addNode(2)
+dir(d)
+print(d)
+d.str()
+
     
 #creating nodes
 nodeA = Node(5)
