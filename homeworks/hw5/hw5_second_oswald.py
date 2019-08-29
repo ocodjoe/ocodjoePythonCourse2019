@@ -41,17 +41,27 @@ class LinkedList:
             print(current.get_value())
             current = current.get_next()
     
-    def length(self):  #cont. here..
+    def length(self):
         current = self.head
-        total = 0
-        while current:
-            if current.next is None:
-                total = total + 1
-                return total
+        total = 1
+        while current.next != None:
+            total +=1 
+            current = current.next
+        return total 
+            
+    def addNodeAfter(self, new_value, after_node): ##cont. here
+        current = self.head
+        while current.next != after_node:
+            current = current.next()
+        new_node = Node(new_value)
+        new_node = current.next
+        current.next = new_node  
+        
             
 
-            
+        
     
+   
 
 
 #This is for testing the LinkedList class
@@ -59,8 +69,12 @@ list1 = LinkedList(5)
 list1.addNode(12)
 list1.addNode(2)
 list1.print_list()
-list1.addNode(12)
-
 list1.length()
+list1.addNodeAfter(50, Node(12))  
+
+dir
+
+
+
 
         
